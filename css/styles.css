@@ -40,7 +40,7 @@ nav ul li a:hover {
 }
 
 #hero {
-    background-image: url('your-background-image.jpg'); /* Update with your background image URL */
+    background-image: url('background.jpg'); /* Ensure the image name is correct */
     background-size: cover;
     background-position: center;
     color: white;
