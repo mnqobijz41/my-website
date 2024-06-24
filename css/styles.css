@@ -6,8 +6,8 @@ body {
 }
 
 header {
-    background: #333;
-    color: #fff;
+    background-color: #333;
+    color: white;
     padding: 10px 0;
     text-align: center;
 }
@@ -23,17 +23,50 @@ nav ul li {
 }
 
 nav ul li a {
-    color: #fff;
+    color: white;
     text-decoration: none;
 }
 
-main {
+section {
     padding: 20px;
+    margin: 10px 0;
+}
+
+#hero {
+    background-color: #555;
+    color: white;
+    padding: 50px 20px;
+    text-align: center;
+}
+
+#contact form {
+    display: flex;
+    flex-direction: column;
+    max-width: 400px;
+    margin: 0 auto;
+}
+
+#contact label {
+    margin-top: 10px;
+}
+
+#contact input, #contact textarea {
+    padding: 10px;
+    margin-top: 5px;
+}
+
+#contact button {
+    padding: 10px;
+    background-color: #333;
+    color: white;
+    border: none;
+    margin-top: 10px;
+    cursor: pointer;
 }
 
 footer {
-    background: #333;
-    color: #fff;
+    background-color: #333;
+    color: white;
     text-align: center;
     padding: 10px 0;
     position: fixed;
