@@ -5,28 +5,88 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Contact - MNQOBI LISBON JEZA</title>
     <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
 <body>
-    <header>
-        <nav>
-            <ul>
-                <li><a href="index.html">Home</a></li>
-                <li><a href="about.html">About</a></li>
-                <li><a href="services.html">Services</a></li>
-                <li><a href="projects.html">Projects</a></li>
-                <li><a href="contact.html" class="active">Contact</a></li>
+    <header class="header">
+        <nav class="navbar">
+            <div class="nav-brand">
+                <h2>MNQOBI</h2>
+            </div>
+            <ul class="nav-menu">
+                <li><a href="index.html" class="nav-link">Home</a></li>
+                <li><a href="about.html" class="nav-link">About</a></li>
+                <li><a href="projects.html" class="nav-link">Projects</a></li>
+                <li><a href="contact.html" class="nav-link active">Contact</a></li>
             </ul>
+            <div class="hamburger">
+                <span class="bar"></span>
+                <span class="bar"></span>
+                <span class="bar"></span>
+            </div>
         </nav>
     </header>
+
     <main>
-        <section id="contact">
-            <h1>Contact Me</h1>
-            <p>Phone: 0790475617</p>
-            <p>Email: mnqobijz41@gmail.com</p>
+        <section class="contact-hero">
+            <div class="container">
+                <h1>Get In Touch</h1>
+                <p>Let's discuss your next project</p>
+            </div>
+        </section>
+
+        <section class="contact-content">
+            <div class="container">
+                <div class="contact-info">
+                    <h2>Contact Information</h2>
+                    <div class="contact-item">
+                        <i class="fas fa-phone"></i>
+                        <span>Phone: 0790475617</span>
+                    </div>
+                    <div class="contact-item">
+                        <i class="fas fa-envelope"></i>
+                        <span>Email: mnqobijz41@gmail.com</span>
+                    </div>
+                    <div class="contact-item">
+                        <i class="fas fa-map-marker-alt"></i>
+                        <span>Location: South Africa</span>
+                    </div>
+                </div>
+                
+                <div class="contact-cta">
+                    <h3>Ready to Start Your Project?</h3>
+                    <p>I'm always excited to work on new and challenging projects. Whether you need a website, graphic design work, or SEO optimization, I'm here to help bring your vision to life.</p>
+                    <a href="mailto:mnqobijz41@gmail.com" class="btn btn-primary">Send Me an Email</a>
+                </div>
+            </div>
         </section>
     </main>
-    <footer>
-        <p>&copy; 2024 My Website</p>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-brand">
+                    <h3>MNQOBI LISBON JEZA</h3>
+                    <p>Web Developer & Designer</p>
+                </div>
+                <div class="footer-links">
+                    <a href="index.html">Home</a>
+                    <a href="about.html">About</a>
+                    <a href="projects.html">Projects</a>
+                    <a href="contact.html">Contact</a>
+                </div>
+                <div class="footer-social">
+                    <a href="#"><i class="fab fa-github"></i></a>
+                    <a href="#"><i class="fab fa-linkedin"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 MNQOBI LISBON JEZA. All rights reserved.</p>
+            </div>
+        </div>
     </footer>
+
+    <script src="script.js"></script>
 </body>
 </html> 

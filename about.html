@@ -5,27 +5,73 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>About Me - MNQOBI LISBON JEZA</title>
     <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
 <body>
-    <header>
-        <h1>About Me</h1>
-        <nav>
-            <ul>
-                <li><a href="index.html">Home</a></li>
-                <li><a href="about.html">About</a></li>
-                <li><a href="services.html">Services</a></li>
-                <li><a href="projects.html">Projects</a></li>
-                <li><a href="contact.html">Contact</a></li>
+    <header class="header">
+        <nav class="navbar">
+            <div class="nav-brand">
+                <h2>MNQOBI</h2>
+            </div>
+            <ul class="nav-menu">
+                <li><a href="index.html" class="nav-link">Home</a></li>
+                <li><a href="about.html" class="nav-link active">About</a></li>
+                <li><a href="projects.html" class="nav-link">Projects</a></li>
+                <li><a href="contact.html" class="nav-link">Contact</a></li>
             </ul>
+            <div class="hamburger">
+                <span class="bar"></span>
+                <span class="bar"></span>
+                <span class="bar"></span>
+            </div>
         </nav>
     </header>
-    <section id="about">
-        <h2>About Me</h2>
-        <p>Hello, I'm MNQOBI LISBON JEZA. I am a web developer, graphic designer, and SEO specialist. I have a passion for creating beautiful and functional websites.</p>
-        <p>With several years of experience in the industry, I have worked on various projects that have helped businesses establish a strong online presence.</p>
-    </section>
-    <footer>
-        <p>© 2024 My Website</p>
+
+    <main>
+        <section class="about-hero">
+            <div class="container">
+                <h1>About Me</h1>
+                <p>Get to know me better</p>
+            </div>
+        </section>
+
+        <section class="about-content">
+            <div class="container">
+                <h2>Hello, I'm MNQOBI LISBON JEZA</h2>
+                <p>I am a passionate web developer, graphic designer, and SEO specialist with a deep love for creating beautiful and functional digital experiences. With several years of experience in the industry, I have had the privilege of working on various projects that have helped businesses establish a strong online presence.</p>
+                
+                <p>My journey in the digital world began with a curiosity about how websites work and evolved into a comprehensive skill set that spans across multiple disciplines. I believe in the power of clean, user-centered design and efficient, scalable code.</p>
+                
+                <p>When I'm not coding or designing, you can find me exploring new technologies, contributing to open-source projects, or sharing knowledge with the developer community. I'm always excited to take on new challenges and collaborate with clients who share my passion for excellence.</p>
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-brand">
+                    <h3>MNQOBI LISBON JEZA</h3>
+                    <p>Web Developer & Designer</p>
+                </div>
+                <div class="footer-links">
+                    <a href="index.html">Home</a>
+                    <a href="about.html">About</a>
+                    <a href="projects.html">Projects</a>
+                    <a href="contact.html">Contact</a>
+                </div>
+                <div class="footer-social">
+                    <a href="#"><i class="fab fa-github"></i></a>
+                    <a href="#"><i class="fab fa-linkedin"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 MNQOBI LISBON JEZA. All rights reserved.</p>
+            </div>
+        </div>
     </footer>
+
+    <script src="script.js"></script>
 </body>
 </html> 
