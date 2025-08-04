@@ -1,1 +1,2 @@
-console.log("EduTracks is live!");
+// Personal Website Scripts
+console.log("Website loaded successfully!");
