@@ -1,14 +1,28 @@
-# EduTracks - Personalized Education Platform
+# MNQOBI LISBON JEZA - Personal Website
 
-A comprehensive online learning platform offering personalized education solutions with adaptive learning paths, progress tracking, and expert-led courses.
+Personal portfolio website showcasing web development, graphic design, and SEO services.
 
-## Features
+## About Me
 
-- **Personalized Learning**: Adaptive learning paths tailored to individual needs
-- **Progress Tracking**: Detailed analytics and learning insights
-- **Expert Instructors**: Industry professionals with years of teaching experience
-- **Mobile Learning**: Access courses anywhere, anytime
-- **Course Categories**: Web Development, Graphic Design, Digital Marketing & SEO
+I am a web developer, graphic designer, and SEO specialist with a passion for creating beautiful and functional websites. With several years of experience in the industry, I have worked on various projects that have helped businesses establish a strong online presence.
+
+## Services Offered
+
+- **Web Development**: Responsive, user-friendly websites tailored to your needs
+- **Graphic Design**: From logos to brochures, I provide design services to help you stand out
+- **SEO Optimization**: Improve your website's visibility and ranking on search engines
+
+## Projects
+
+My portfolio includes:
+- Academic projects showcasing technical skills
+- Personal development projects
+- Ongoing work and collaborations
+
+## Contact Information
+
+- **Phone**: 0790475617
+- **Email**: mnqobijz41@gmail.com
 
 ## Technologies Used
 
@@ -18,16 +32,6 @@ A comprehensive online learning platform offering personalized education solutio
 - Font Awesome Icons
 - Responsive Design
 
-## Getting Started
-
-Visit [EduTracks](https://mnqobijz41.github.io/eduTracks/) to explore our courses and features.
-
-## Course Offerings
-
-- **Web Development Fundamentals** - Learn HTML, CSS, and JavaScript
-- **Graphic Design Mastery** - Master Adobe Creative Suite
-- **Digital Marketing & SEO** - Modern marketing strategies
-
 ---
 
-© 2024 EduTracks. All rights reserved. 
+© 2024 MNQOBI LISBON JEZA. All rights reserved. 
