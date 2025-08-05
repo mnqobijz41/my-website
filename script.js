@@ -2,15 +2,19 @@
 const hamburger = document.querySelector('.hamburger');
 const navMenu = document.querySelector('.nav-menu');
 
-hamburger.addEventListener('click', () => {
-    hamburger.classList.toggle('active');
-    navMenu.classList.toggle('active');
-});
+if (hamburger && navMenu) {
+    hamburger.addEventListener('click', () => {
+        hamburger.classList.toggle('active');
+        navMenu.classList.toggle('active');
+    });
+}
 
 // Close mobile menu when clicking on a link
 document.querySelectorAll('.nav-link').forEach(n => n.addEventListener('click', () => {
-    hamburger.classList.remove('active');
-    navMenu.classList.remove('active');
+    if (hamburger && navMenu) {
+        hamburger.classList.remove('active');
+        navMenu.classList.remove('active');
+    }
 }));
 
 // Smooth scrolling for anchor links
@@ -30,37 +34,60 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
 // Add scroll effect to navbar
 window.addEventListener('scroll', () => {
     const header = document.querySelector('.header');
-    if (window.scrollY > 100) {
-        header.style.background = 'rgba(255, 255, 255, 0.98)';
-        header.style.boxShadow = '0 2px 20px rgba(0, 0, 0, 0.1)';
-    } else {
-        header.style.background = 'rgba(255, 255, 255, 0.95)';
-        header.style.boxShadow = 'none';
+    if (header) {
+        const currentTheme = document.body.getAttribute('data-theme');
+        
+        if (window.scrollY > 100) {
+            if (currentTheme === 'dark') {
+                header.style.background = 'rgba(26, 26, 26, 0.98)';
+                header.style.boxShadow = '0 2px 20px rgba(0, 0, 0, 0.3)';
+            } else {
+                header.style.background = 'rgba(255, 255, 255, 0.98)';
+                header.style.boxShadow = '0 2px 20px rgba(0, 0, 0, 0.1)';
+            }
+        } else {
+            if (currentTheme === 'dark') {
+                header.style.background = 'rgba(26, 26, 26, 0.95)';
+                header.style.boxShadow = 'none';
+            } else {
+                header.style.background = 'rgba(255, 255, 255, 0.95)';
+                header.style.boxShadow = 'none';
+            }
+        }
     }
 });
 
 // Theme Toggle Functionality
-const themeToggle = document.getElementById('themeToggle');
-const themeIcon = document.getElementById('themeIcon');
-const body = document.body;
+function initializeThemeToggle() {
+    const themeToggle = document.getElementById('themeToggle');
+    const themeIcon = document.getElementById('themeIcon');
+    const body = document.body;
 
-// Check for saved theme preference or default to light mode
-const currentTheme = localStorage.getItem('theme') || 'light';
-body.setAttribute('data-theme', currentTheme);
-updateThemeIcon(currentTheme);
+    if (!themeToggle || !themeIcon) {
+        console.log('Theme toggle elements not found');
+        return;
+    }
 
-// Theme toggle click handler
-themeToggle.addEventListener('click', () => {
-    const currentTheme = body.getAttribute('data-theme');
-    const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
-    
-    body.setAttribute('data-theme', newTheme);
-    localStorage.setItem('theme', newTheme);
-    updateThemeIcon(newTheme);
-});
+    // Check for saved theme preference or default to light mode
+    const currentTheme = localStorage.getItem('theme') || 'light';
+    body.setAttribute('data-theme', currentTheme);
+    updateThemeIcon(currentTheme, themeIcon);
+
+    // Theme toggle click handler
+    themeToggle.addEventListener('click', () => {
+        const currentTheme = body.getAttribute('data-theme');
+        const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+        
+        body.setAttribute('data-theme', newTheme);
+        localStorage.setItem('theme', newTheme);
+        updateThemeIcon(newTheme, themeIcon);
+        
+        console.log('Theme changed to:', newTheme);
+    });
+}
 
 // Update theme icon based on current theme
-function updateThemeIcon(theme) {
+function updateThemeIcon(theme, themeIcon) {
     if (theme === 'dark') {
         themeIcon.className = 'fas fa-moon';
     } else {
@@ -68,5 +95,15 @@ function updateThemeIcon(theme) {
     }
 }
 
-// Console log for debugging
-console.log('MNQOBI LISBON JEZA - Personal Website loaded successfully!');
+// Initialize theme toggle when DOM is loaded
+document.addEventListener('DOMContentLoaded', () => {
+    initializeThemeToggle();
+    console.log('MNQOBI LISBON JEZA - Personal Website loaded successfully!');
+});
+
+// Also initialize immediately in case DOM is already loaded
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initializeThemeToggle);
+} else {
+    initializeThemeToggle();
+}

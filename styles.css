@@ -889,6 +889,15 @@ body {
     border-bottom: 1px solid var(--border-color);
 }
 
+[data-theme="dark"] .navbar {
+    background: transparent;
+}
+
+[data-theme="dark"] .header.scrolled {
+    background: rgba(26, 26, 26, 0.98);
+    box-shadow: 0 2px 20px rgba(0, 0, 0, 0.3);
+}
+
 [data-theme="dark"] .nav-link {
     color: var(--text-primary);
 }
