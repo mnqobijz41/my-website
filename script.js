@@ -39,5 +39,34 @@ window.addEventListener('scroll', () => {
     }
 });
 
+// Theme Toggle Functionality
+const themeToggle = document.getElementById('themeToggle');
+const themeIcon = document.getElementById('themeIcon');
+const body = document.body;
+
+// Check for saved theme preference or default to light mode
+const currentTheme = localStorage.getItem('theme') || 'light';
+body.setAttribute('data-theme', currentTheme);
+updateThemeIcon(currentTheme);
+
+// Theme toggle click handler
+themeToggle.addEventListener('click', () => {
+    const currentTheme = body.getAttribute('data-theme');
+    const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+    
+    body.setAttribute('data-theme', newTheme);
+    localStorage.setItem('theme', newTheme);
+    updateThemeIcon(newTheme);
+});
+
+// Update theme icon based on current theme
+function updateThemeIcon(theme) {
+    if (theme === 'dark') {
+        themeIcon.className = 'fas fa-moon';
+    } else {
+        themeIcon.className = 'fas fa-sun';
+    }
+}
+
 // Console log for debugging
 console.log('MNQOBI LISBON JEZA - Personal Website loaded successfully!');
