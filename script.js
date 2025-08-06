@@ -68,9 +68,9 @@ function initializeThemeToggle() {
         return;
     }
 
-    // Clear any existing theme and default to light mode
+    // Get saved theme or default to light
     const savedTheme = localStorage.getItem('theme');
-    const currentTheme = savedTheme === 'dark' ? 'dark' : 'light';
+    const currentTheme = savedTheme || 'light';
     
     // Set the theme
     body.setAttribute('data-theme', currentTheme);
@@ -79,20 +79,35 @@ function initializeThemeToggle() {
     
     console.log('Initial theme set to:', currentTheme);
 
+    // Remove any existing event listeners to prevent duplicates
+    themeToggle.removeEventListener('click', handleThemeToggle);
+    
     // Theme toggle click handler
-    themeToggle.addEventListener('click', () => {
-        const currentTheme = body.getAttribute('data-theme');
-        const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
-        
-        console.log('Toggling theme from', currentTheme, 'to', newTheme);
-        
-        body.setAttribute('data-theme', newTheme);
-        localStorage.setItem('theme', newTheme);
-        updateThemeIcon(newTheme, themeIcon);
-        updateHeaderBackground(newTheme);
-        
-        console.log('Theme changed to:', newTheme);
-    });
+    themeToggle.addEventListener('click', handleThemeToggle);
+}
+
+// Separate function for theme toggle handling
+function handleThemeToggle() {
+    console.log('Theme toggle clicked!');
+    
+    const body = document.body;
+    const themeIcon = document.getElementById('themeIcon');
+    const currentTheme = body.getAttribute('data-theme');
+    const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+    
+    console.log('Toggling theme from', currentTheme, 'to', newTheme);
+    
+    body.setAttribute('data-theme', newTheme);
+    localStorage.setItem('theme', newTheme);
+    updateThemeIcon(newTheme, themeIcon);
+    updateHeaderBackground(newTheme);
+    
+    console.log('Theme changed to:', newTheme);
+    
+    // Debug the new state
+    setTimeout(() => {
+        debugThemeState();
+    }, 100);
 }
 
 // Update header background based on theme
@@ -109,16 +124,23 @@ function updateHeaderBackground(theme) {
 
 // Update theme icon based on current theme
 function updateThemeIcon(theme, themeIcon) {
+    if (!themeIcon) {
+        console.log('Theme icon element not found');
+        return;
+    }
+    
     if (theme === 'dark') {
         themeIcon.className = 'fas fa-sun';
+        console.log('Icon set to sun (dark mode active)');
     } else {
         themeIcon.className = 'fas fa-moon';
+        console.log('Icon set to moon (light mode active)');
     }
 }
 
 // Initialize theme toggle when DOM is loaded
 document.addEventListener('DOMContentLoaded', () => {
-    // Clear any existing theme to ensure light mode default
+    // Ensure light mode is default if no theme is set
     if (!localStorage.getItem('theme')) {
         localStorage.setItem('theme', 'light');
     }
@@ -158,6 +180,40 @@ function resetToLightMode() {
 // Uncomment the line below to force light mode (for testing)
 // resetToLightMode();
 
+// Function to sync theme state across all pages
+function syncThemeState() {
+    const savedTheme = localStorage.getItem('theme') || 'light';
+    const body = document.body;
+    const themeIcon = document.getElementById('themeIcon');
+    
+    body.setAttribute('data-theme', savedTheme);
+    updateThemeIcon(savedTheme, themeIcon);
+    updateHeaderBackground(savedTheme);
+    
+    console.log('Theme state synced to:', savedTheme);
+}
+
 // Add this to test the theme toggle
 console.log('Current theme:', localStorage.getItem('theme'));
 console.log('Body data-theme:', document.body.getAttribute('data-theme'));
+
+// Sync theme state on page load
+syncThemeState();
+
+// Debug function to check current theme state
+function debugThemeState() {
+    const savedTheme = localStorage.getItem('theme');
+    const bodyTheme = document.body.getAttribute('data-theme');
+    const themeIcon = document.getElementById('themeIcon');
+    const iconClass = themeIcon ? themeIcon.className : 'not found';
+    
+    console.log('=== Theme Debug Info ===');
+    console.log('Saved theme:', savedTheme);
+    console.log('Body theme:', bodyTheme);
+    console.log('Icon class:', iconClass);
+    console.log('Icon element found:', !!themeIcon);
+    console.log('========================');
+}
+
+// Run debug on page load
+debugThemeState();
