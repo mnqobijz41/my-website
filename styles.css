@@ -870,13 +870,17 @@ body {
     line-height: 1.6;
 }
 
-/* Dark Mode Styles */
+/* Dark Mode Styles - Optimized for Eye Comfort */
 [data-theme="dark"] {
-    --bg-primary: #1a1a1a;
-    --bg-secondary: #2d2d2d;
-    --text-primary: #ffffff;
-    --text-secondary: #cccccc;
-    --border-color: #444444;
+    --bg-primary: #0a0a0a;
+    --bg-secondary: #1a1a1a;
+    --bg-tertiary: #2d2d2d;
+    --text-primary: #e0e0e0;
+    --text-secondary: #b0b0b0;
+    --text-muted: #808080;
+    --border-color: #333333;
+    --accent-color: #667eea;
+    --accent-hover: #7c8ff0;
 }
 
 [data-theme="dark"] body {
@@ -885,7 +889,7 @@ body {
 }
 
 [data-theme="dark"] .header {
-    background: rgba(26, 26, 26, 0.95);
+    background: rgba(10, 10, 10, 0.95);
     border-bottom: 1px solid var(--border-color);
 }
 
@@ -894,8 +898,8 @@ body {
 }
 
 [data-theme="dark"] .header.scrolled {
-    background: rgba(26, 26, 26, 0.98);
-    box-shadow: 0 2px 20px rgba(0, 0, 0, 0.3);
+    background: rgba(10, 10, 10, 0.98);
+    box-shadow: 0 2px 20px rgba(0, 0, 0, 0.5);
 }
 
 [data-theme="dark"] .nav-link {
@@ -904,74 +908,52 @@ body {
 
 [data-theme="dark"] .nav-link:hover,
 [data-theme="dark"] .nav-link.active {
-    color: #667eea;
+    color: var(--accent-color);
 }
 
 [data-theme="dark"] .bar {
     background: var(--text-primary);
 }
 
+[data-theme="dark"] .theme-toggle {
+    color: var(--text-primary);
+}
+
+[data-theme="dark"] .theme-toggle:hover {
+    background: rgba(102, 126, 234, 0.2);
+    color: var(--accent-color);
+}
+
+/* Hero Section Dark Mode */
 [data-theme="dark"] .hero {
-    background: linear-gradient(135deg, #2d2d2d 0%, #1a1a1a 100%);
+    background: linear-gradient(135deg, #1a1a1a 0%, #0a0a0a 100%);
 }
 
 [data-theme="dark"] .hero-description {
     color: var(--text-secondary);
 }
 
-[data-theme="dark"] .services-preview {
+[data-theme="dark"] .hero-subtitle {
+    color: var(--accent-color);
+}
+
+/* About Page Dark Mode */
+[data-theme="dark"] .about-hero {
+    background: linear-gradient(135deg, #1a1a1a 0%, #0a0a0a 100%);
+}
+
+[data-theme="dark"] .about-hero .hero-subtitle {
+    color: var(--accent-color);
+}
+
+[data-theme="dark"] .about-content {
     background: var(--bg-primary);
-}
-
-[data-theme="dark"] .section-title {
-    color: var(--text-primary);
-}
-
-[data-theme="dark"] .service-card {
-    background: var(--bg-secondary);
-    border: 1px solid var(--border-color);
-}
-
-[data-theme="dark"] .service-card h3 {
-    color: var(--text-primary);
-}
-
-[data-theme="dark"] .service-card p {
-    color: var(--text-secondary);
-}
-
-[data-theme="dark"] .profile-card {
-    background: var(--bg-secondary);
-    border: 1px solid var(--border-color);
-}
-
-[data-theme="dark"] .profile-info h3 {
-    color: var(--text-primary);
-}
-
-[data-theme="dark"] .profile-info p {
-    color: var(--text-secondary);
-}
-
-[data-theme="dark"] .footer {
-    background: #0f0f0f;
-}
-
-[data-theme="dark"] .contact-item a {
-    color: var(--text-primary);
-}
-
-[data-theme="dark"] .contact-item a:hover {
-    color: #667eea;
-}
-
-[data-theme="dark"] .contact-item span {
-    color: var(--text-primary);
 }
 
 [data-theme="dark"] .about-card {
     background: var(--bg-secondary);
     border: 1px solid var(--border-color);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
 }
 
 [data-theme="dark"] .about-card h2 {
@@ -985,6 +967,7 @@ body {
 [data-theme="dark"] .skill-category {
     background: var(--bg-secondary);
     border: 1px solid var(--border-color);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
 }
 
 [data-theme="dark"] .skill-category h3 {
@@ -992,19 +975,68 @@ body {
 }
 
 [data-theme="dark"] .skill-tag {
-    background: var(--bg-primary);
+    background: var(--bg-tertiary);
     color: var(--text-secondary);
     border: 1px solid var(--border-color);
 }
 
 [data-theme="dark"] .skill-tag:hover {
-    background: #667eea;
+    background: var(--accent-color);
     color: white;
+    border-color: var(--accent-color);
+}
+
+/* Services Section Dark Mode */
+[data-theme="dark"] .services-preview {
+    background: var(--bg-primary);
+}
+
+[data-theme="dark"] .section-title {
+    color: var(--text-primary);
+}
+
+[data-theme="dark"] .service-card {
+    background: var(--bg-secondary);
+    border: 1px solid var(--border-color);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+}
+
+[data-theme="dark"] .service-card h3 {
+    color: var(--text-primary);
+}
+
+[data-theme="dark"] .service-card p {
+    color: var(--text-secondary);
+}
+
+/* Profile Card Dark Mode */
+[data-theme="dark"] .profile-card {
+    background: var(--bg-secondary);
+    border: 1px solid var(--border-color);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+}
+
+[data-theme="dark"] .profile-info h3 {
+    color: var(--text-primary);
+}
+
+[data-theme="dark"] .profile-info p {
+    color: var(--text-secondary);
+}
+
+/* Projects Page Dark Mode */
+[data-theme="dark"] .projects-hero {
+    background: linear-gradient(135deg, var(--accent-color) 0%, #764ba2 100%);
+}
+
+[data-theme="dark"] .project-category h2 {
+    color: var(--text-primary);
 }
 
 [data-theme="dark"] .project-card {
     background: var(--bg-secondary);
     border: 1px solid var(--border-color);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
 }
 
 [data-theme="dark"] .project-content h3 {
@@ -1016,41 +1048,60 @@ body {
 }
 
 [data-theme="dark"] .tech-tag {
-    background: var(--bg-primary);
+    background: var(--bg-tertiary);
     color: var(--text-secondary);
     border: 1px solid var(--border-color);
 }
 
 [data-theme="dark"] .project-link {
-    color: #667eea;
-    border-color: #667eea;
+    color: var(--accent-color);
+    border-color: var(--accent-color);
 }
 
 [data-theme="dark"] .project-link:hover {
-    background: #667eea;
+    background: var(--accent-color);
     color: white;
 }
 
-[data-theme="dark"] .cta-section {
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+[data-theme="dark"] .progress-text {
+    color: var(--text-secondary);
 }
 
-[data-theme="dark"] .cta-section-about {
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+/* Contact Page Dark Mode */
+[data-theme="dark"] .contact-hero {
+    background: linear-gradient(135deg, #1a1a1a 0%, #0a0a0a 100%);
+}
+
+[data-theme="dark"] .contact-hero h1 {
+    color: var(--text-primary);
 }
 
 [data-theme="dark"] .contact-info {
     background: var(--bg-secondary);
     border: 1px solid var(--border-color);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
 }
 
 [data-theme="dark"] .contact-info h2 {
     color: var(--text-primary);
 }
 
+[data-theme="dark"] .contact-item a {
+    color: var(--text-primary);
+}
+
+[data-theme="dark"] .contact-item a:hover {
+    color: var(--accent-color);
+}
+
+[data-theme="dark"] .contact-item span {
+    color: var(--text-primary);
+}
+
 [data-theme="dark"] .contact-cta {
     background: var(--bg-secondary);
     border: 1px solid var(--border-color);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
 }
 
 [data-theme="dark"] .contact-cta h3 {
@@ -1061,16 +1112,51 @@ body {
     color: var(--text-secondary);
 }
 
-[data-theme="dark"] .projects-hero {
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+/* CTA Sections Dark Mode */
+[data-theme="dark"] .cta-section {
+    background: linear-gradient(135deg, var(--accent-color) 0%, #764ba2 100%);
 }
 
-[data-theme="dark"] .project-category h2 {
+[data-theme="dark"] .cta-section-about {
+    background: linear-gradient(135deg, var(--accent-color) 0%, #764ba2 100%);
+}
+
+/* Footer Dark Mode */
+[data-theme="dark"] .footer {
+    background: #050505;
+    border-top: 1px solid var(--border-color);
+}
+
+[data-theme="dark"] .footer-bottom {
+    border-top: 1px solid var(--border-color);
+    color: var(--text-muted);
+}
+
+/* Back Button Dark Mode */
+[data-theme="dark"] .btn-back {
+    background: rgba(26, 26, 26, 0.9);
+    color: var(--accent-color);
+    border: 1px solid var(--border-color);
+}
+
+[data-theme="dark"] .btn-back:hover {
+    background: var(--accent-color);
+    color: white;
+    border-color: var(--accent-color);
+}
+
+/* Mobile Menu Dark Mode */
+[data-theme="dark"] .nav-menu {
+    background-color: var(--bg-secondary);
+    border: 1px solid var(--border-color);
+}
+
+[data-theme="dark"] .nav-menu .nav-link {
     color: var(--text-primary);
 }
 
-[data-theme="dark"] .progress-text {
-    color: var(--text-secondary);
+[data-theme="dark"] .nav-menu .nav-link:hover {
+    color: var(--accent-color);
 }
 
 /* Responsive Design */

@@ -39,15 +39,15 @@ window.addEventListener('scroll', () => {
         
         if (window.scrollY > 100) {
             if (currentTheme === 'dark') {
-                header.style.background = 'rgba(26, 26, 26, 0.98)';
-                header.style.boxShadow = '0 2px 20px rgba(0, 0, 0, 0.3)';
+                header.style.background = 'rgba(10, 10, 10, 0.98)';
+                header.style.boxShadow = '0 2px 20px rgba(0, 0, 0, 0.5)';
             } else {
                 header.style.background = 'rgba(255, 255, 255, 0.98)';
                 header.style.boxShadow = '0 2px 20px rgba(0, 0, 0, 0.1)';
             }
         } else {
             if (currentTheme === 'dark') {
-                header.style.background = 'rgba(26, 26, 26, 0.95)';
+                header.style.background = 'rgba(10, 10, 10, 0.95)';
                 header.style.boxShadow = 'none';
             } else {
                 header.style.background = 'rgba(255, 255, 255, 0.95)';
@@ -82,16 +82,31 @@ function initializeThemeToggle() {
         localStorage.setItem('theme', newTheme);
         updateThemeIcon(newTheme, themeIcon);
         
+        // Update header background immediately for better UX
+        updateHeaderBackground(newTheme);
+        
         console.log('Theme changed to:', newTheme);
     });
+}
+
+// Update header background based on theme
+function updateHeaderBackground(theme) {
+    const header = document.querySelector('.header');
+    if (header) {
+        if (theme === 'dark') {
+            header.style.background = 'rgba(10, 10, 10, 0.95)';
+        } else {
+            header.style.background = 'rgba(255, 255, 255, 0.95)';
+        }
+    }
 }
 
 // Update theme icon based on current theme
 function updateThemeIcon(theme, themeIcon) {
     if (theme === 'dark') {
-        themeIcon.className = 'fas fa-moon';
-    } else {
         themeIcon.className = 'fas fa-sun';
+    } else {
+        themeIcon.className = 'fas fa-moon';
     }
 }
 
