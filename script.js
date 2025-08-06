@@ -68,21 +68,27 @@ function initializeThemeToggle() {
         return;
     }
 
-    // Check for saved theme preference or default to light mode
-    const currentTheme = localStorage.getItem('theme') || 'light';
+    // Clear any existing theme and default to light mode
+    const savedTheme = localStorage.getItem('theme');
+    const currentTheme = savedTheme === 'dark' ? 'dark' : 'light';
+    
+    // Set the theme
     body.setAttribute('data-theme', currentTheme);
     updateThemeIcon(currentTheme, themeIcon);
+    updateHeaderBackground(currentTheme);
+    
+    console.log('Initial theme set to:', currentTheme);
 
     // Theme toggle click handler
     themeToggle.addEventListener('click', () => {
         const currentTheme = body.getAttribute('data-theme');
         const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
         
+        console.log('Toggling theme from', currentTheme, 'to', newTheme);
+        
         body.setAttribute('data-theme', newTheme);
         localStorage.setItem('theme', newTheme);
         updateThemeIcon(newTheme, themeIcon);
-        
-        // Update header background immediately for better UX
         updateHeaderBackground(newTheme);
         
         console.log('Theme changed to:', newTheme);
@@ -112,13 +118,46 @@ function updateThemeIcon(theme, themeIcon) {
 
 // Initialize theme toggle when DOM is loaded
 document.addEventListener('DOMContentLoaded', () => {
+    // Clear any existing theme to ensure light mode default
+    if (!localStorage.getItem('theme')) {
+        localStorage.setItem('theme', 'light');
+    }
+    
     initializeThemeToggle();
     console.log('MNQOBI LISBON JEZA - Personal Website loaded successfully!');
 });
 
 // Also initialize immediately in case DOM is already loaded
 if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', initializeThemeToggle);
+    document.addEventListener('DOMContentLoaded', () => {
+        if (!localStorage.getItem('theme')) {
+            localStorage.setItem('theme', 'light');
+        }
+        initializeThemeToggle();
+    });
 } else {
+    if (!localStorage.getItem('theme')) {
+        localStorage.setItem('theme', 'light');
+    }
     initializeThemeToggle();
 }
+
+// Function to reset theme to light mode (for debugging)
+function resetToLightMode() {
+    localStorage.setItem('theme', 'light');
+    const body = document.body;
+    const themeIcon = document.getElementById('themeIcon');
+    
+    body.setAttribute('data-theme', 'light');
+    updateThemeIcon('light', themeIcon);
+    updateHeaderBackground('light');
+    
+    console.log('Theme reset to light mode');
+}
+
+// Uncomment the line below to force light mode (for testing)
+// resetToLightMode();
+
+// Add this to test the theme toggle
+console.log('Current theme:', localStorage.getItem('theme'));
+console.log('Body data-theme:', document.body.getAttribute('data-theme'));

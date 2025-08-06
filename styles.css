@@ -888,6 +888,15 @@ body {
     color: var(--text-primary);
 }
 
+/* Ensure all main containers have dark background */
+[data-theme="dark"] main {
+    background: var(--bg-primary);
+}
+
+[data-theme="dark"] .container {
+    background: var(--bg-primary);
+}
+
 [data-theme="dark"] .header {
     background: rgba(10, 10, 10, 0.95);
     border-bottom: 1px solid var(--border-color);
@@ -1159,6 +1168,56 @@ body {
     color: var(--accent-color);
 }
 
+/* Additional Dark Mode Fixes */
+[data-theme="dark"] .projects-container {
+    background: var(--bg-primary);
+}
+
+[data-theme="dark"] .contact-content {
+    background: var(--bg-primary);
+}
+
+[data-theme="dark"] .about-content {
+    background: var(--bg-primary);
+}
+
+[data-theme="dark"] .services-preview {
+    background: var(--bg-primary);
+}
+
+[data-theme="dark"] .cta-section {
+    background: linear-gradient(135deg, var(--accent-color) 0%, #764ba2 100%);
+}
+
+[data-theme="dark"] .cta-section-about {
+    background: linear-gradient(135deg, var(--accent-color) 0%, #764ba2 100%);
+}
+
+/* Ensure all text elements have proper dark mode colors */
+[data-theme="dark"] h1, 
+[data-theme="dark"] h2, 
+[data-theme="dark"] h3, 
+[data-theme="dark"] h4, 
+[data-theme="dark"] h5, 
+[data-theme="dark"] h6 {
+    color: var(--text-primary);
+}
+
+[data-theme="dark"] p {
+    color: var(--text-secondary);
+}
+
+/* Fix any remaining white backgrounds */
+[data-theme="dark"] .btn-secondary {
+    color: var(--accent-color);
+    border-color: var(--accent-color);
+}
+
+[data-theme="dark"] .btn-secondary:hover {
+    background: var(--accent-color);
+    color: white;
+}
+
 /* Responsive Design */
 @media (max-width: 768px) {
     .hamburger {
@@ -1171,7 +1230,7 @@ body {
         top: 70px;
         flex-direction: column;
         background-color: white;
-    width: 100%;
+        width: 100%;
         text-align: center;
         transition: 0.3s;
         box-shadow: 0 10px 27px rgba(0, 0, 0, 0.05);
@@ -1180,6 +1239,12 @@ body {
     
     .nav-menu.active {
         left: 0;
+    }
+    
+    /* Mobile menu dark mode */
+    [data-theme="dark"] .nav-menu {
+        background-color: var(--bg-secondary);
+        border: 1px solid var(--border-color);
     }
     
     .hero-content {
