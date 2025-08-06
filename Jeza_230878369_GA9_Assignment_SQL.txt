@@ -1,0 +1,249 @@
+DROP DATABASE IF EXISTS Jeza_230878369;
+CREATE DATABASE Jeza_230878369;
+USE Jeza_230878369;
+
+CREATE TABLE Jeza_Authors (
+    AuthorID INT PRIMARY KEY AUTO_INCREMENT,
+    FirstName VARCHAR(50) NOT NULL,
+    LastName VARCHAR(50) NOT NULL,
+    Email VARCHAR(100),
+    Nationality VARCHAR(50)
+);
+
+CREATE TABLE Jeza_Books (
+    BookID INT PRIMARY KEY AUTO_INCREMENT,
+    Title VARCHAR(100) NOT NULL,
+    AuthorID INT,
+    Price DECIMAL(10,2) NOT NULL,
+    PublicationYear INT,
+    Genre VARCHAR(50),
+    FOREIGN KEY (AuthorID) REFERENCES Jeza_Authors(AuthorID) ON DELETE SET NULL
+);
+
+CREATE TABLE Jeza_Customers (
+    CustomerID INT PRIMARY KEY AUTO_INCREMENT,
+    FirstName VARCHAR(50) NOT NULL,
+    LastName VARCHAR(50) NOT NULL,
+    Email VARCHAR(100),
+    Phone VARCHAR(20),
+    Address VARCHAR(200)
+);
+
+CREATE TABLE Jeza_Orders (
+    OrderID INT PRIMARY KEY AUTO_INCREMENT,
+    CustomerID INT,
+    BookID INT,
+    OrderDate DATE NOT NULL,
+    Quantity INT NOT NULL,
+    TotalPrice DECIMAL(10,2),
+    FOREIGN KEY (CustomerID) REFERENCES Jeza_Customers(CustomerID) ON DELETE CASCADE,
+    FOREIGN KEY (BookID) REFERENCES Jeza_Books(BookID) ON DELETE CASCADE
+);
+
+CREATE TABLE Jeza_Inventory (
+    InventoryID INT PRIMARY KEY AUTO_INCREMENT,
+    BookID INT,
+    StockQuantity INT NOT NULL,
+    LastRestockDate DATE,
+    Supplier VARCHAR(100),
+    CostPrice DECIMAL(10,2),
+    FOREIGN KEY (BookID) REFERENCES Jeza_Books(BookID) ON DELETE CASCADE
+);
+
+CREATE TABLE Jeza_OrderErrors (
+    ErrorID INT PRIMARY KEY AUTO_INCREMENT,
+    OrderID INT,
+    ErrorMessage VARCHAR(255),
+    ErrorDate DATETIME
+);
+
+CREATE TABLE Jeza_StockAlerts (
+    AlertID INT PRIMARY KEY AUTO_INCREMENT,
+    BookID INT,
+    StockQuantity INT,
+    AlertDate DATE
+);
+
+INSERT INTO Jeza_Authors (FirstName, LastName, Email, Nationality) VALUES
+('Jane', 'Doe', 'jane.doe@email.com', 'American'),
+('John', 'Smith', 'john.smith@email.com', 'British'),
+('Maria', 'Garcia', 'maria.garcia@email.com', 'Spanish');
+
+INSERT INTO Jeza_Books (Title, AuthorID, Price, PublicationYear, Genre) VALUES
+('The Great Novel', 1, 29.99, 2020, 'Fiction'),
+('Tech Trends', 2, 39.99, 2021, 'Non-Fiction'),
+('Mystery Tales', 1, 19.99, 2019, 'Mystery'),
+('History Unveiled', 3, 34.99, 2022, 'History');
+
+INSERT INTO Jeza_Customers (FirstName, LastName, Email, Phone, Address) VALUES
+('Alice', 'Brown', 'alice.brown@email.com', '123-456-7890', '123 Main St'),
+('Bob', 'Johnson', 'bob.johnson@email.com', '234-567-8901', '456 Oak Ave'),
+('Charlie', 'Davis', 'charlie.davis@email.com', '345-678-9012', '789 Pine Rd'),
+('Diana', 'Wilson', 'diana.wilson@email.com', '456-789-0123', '321 Elm St');
+
+INSERT INTO Jeza_Orders (CustomerID, BookID, OrderDate, Quantity, TotalPrice) VALUES
+(1, 1, '2025-04-01', 2, 59.98),
+(2, 3, '2025-04-02', 1, 19.99),
+(3, 2, '2025-04-03', 3, 119.97),
+(4, 4, '2025-04-04', 1, 34.99);
+
+INSERT INTO Jeza_Inventory (BookID, StockQuantity, LastRestockDate, Supplier, CostPrice) VALUES
+(1, 50, '2025-03-01', 'BookSupplier Inc', 20.00),
+(2, 30, '2025-03-15', 'TechBooks Ltd', 25.00),
+(3, 40, '2025-04-01', 'MysteryBooks Co', 15.00),
+(4, 20, '2025-04-10', 'HistoryPub', 22.00);
+
+SET @rank = 0;
+SELECT 
+    CustomerRank,
+    CustomerName,
+    TotalSpent
+FROM (
+    SELECT 
+        @rank := @rank + 1 AS CustomerRank,
+        CONCAT(c.FirstName, ' ', c.LastName) AS CustomerName,
+        SUM(o.TotalPrice) AS TotalSpent
+    FROM Jeza_Orders o
+    JOIN Jeza_Customers c ON o.CustomerID = c.CustomerID
+    GROUP BY o.CustomerID
+    ORDER BY TotalSpent DESC
+) AS CustomerSales;
+
+DELIMITER //
+CREATE PROCEDURE Jeza_UpdateOrderTotals()
+BEGIN
+    DECLARE done INT DEFAULT FALSE;
+    DECLARE v_OrderID INT;
+    DECLARE v_BookID INT;
+    DECLARE v_Quantity INT;
+    DECLARE v_Stock INT;
+    DECLARE v_Price DECIMAL(10,2);
+    DECLARE v_Error VARCHAR(255);
+    DECLARE order_cursor CURSOR FOR 
+        SELECT OrderID, BookID, Quantity 
+        FROM Jeza_Orders;
+    DECLARE CONTINUE HANDLER FOR NOT FOUND SET done = TRUE;
+    START TRANSACTION;
+    OPEN order_cursor;
+    read_loop: LOOP
+        FETCH order_cursor INTO v_OrderID, v_BookID, v_Quantity;
+        IF done THEN
+            LEAVE read_loop;
+        END IF;
+        SELECT Price INTO v_Price 
+        FROM Jeza_Books 
+        WHERE BookID = v_BookID;
+        SELECT StockQuantity INTO v_Stock 
+        FROM Jeza_Inventory 
+        WHERE BookID = v_BookID;
+        IF v_Stock >= v_Quantity THEN
+            UPDATE Jeza_Orders
+            SET TotalPrice = v_Quantity * v_Price
+            WHERE OrderID = v_OrderID;
+        ELSE
+            SET v_Error = CONCAT('Insufficient stock for BookID ', v_BookID, ': ', v_Stock, ' available, ', v_Quantity, ' requested');
+            INSERT INTO Jeza_OrderErrors (OrderID, ErrorMessage, ErrorDate)
+            VALUES (v_OrderID, v_Error, NOW());
+        END IF;
+    END LOOP;
+    CLOSE order_cursor;
+    COMMIT;
+END //
+DELIMITER ;
+
+CALL Jeza_UpdateOrderTotals();
+SELECT * FROM Jeza_Orders;
+SELECT * FROM Jeza_OrderErrors;
+
+DELIMITER //
+CREATE TRIGGER Jeza_AfterOrderInsert
+AFTER INSERT ON Jeza_Orders
+FOR EACH ROW
+BEGIN
+    DECLARE v_Stock INT;
+    DECLARE v_Error VARCHAR(255);
+    SELECT StockQuantity INTO v_Stock
+    FROM Jeza_Inventory
+    WHERE BookID = NEW.BookID;
+    IF v_Stock >= NEW.Quantity THEN
+        UPDATE Jeza_Inventory
+        SET StockQuantity = StockQuantity - NEW.Quantity
+        WHERE BookID = NEW.BookID;
+    ELSE
+        SET v_Error = CONCAT('Insufficient stock for BookID ', NEW.BookID, ': ', v_Stock, ' available, ', NEW.Quantity, ' requested');
+        INSERT INTO Jeza_OrderErrors (OrderID, ErrorMessage, ErrorDate)
+        VALUES (NEW.OrderID, v_Error, NOW());
+    END IF;
+END //
+DELIMITER ;
+
+INSERT INTO Jeza_Orders (CustomerID, BookID, OrderDate, Quantity, TotalPrice)
+VALUES (1, 1, '2025-04-05', 5, 149.95);
+INSERT INTO Jeza_Orders (CustomerID, BookID, OrderDate, Quantity, TotalPrice)
+VALUES (2, 1, '2025-04-06', 100, 0.00);
+SELECT * FROM Jeza_Inventory WHERE BookID = 1;
+SELECT * FROM Jeza_OrderErrors;
+
+DELIMITER //
+CREATE FUNCTION Jeza_GetDiscountedPrice(p_BookID INT, DiscountPercent DECIMAL(5,2))
+RETURNS DECIMAL(10,2)
+DETERMINISTIC
+BEGIN
+    DECLARE v_Price DECIMAL(10,2);
+    DECLARE v_Count INT;
+    SELECT COUNT(*) INTO v_Count
+    FROM Jeza_Books
+    WHERE BookID = p_BookID;
+    IF v_Count = 0 THEN
+        RETURN 0.00;
+    ELSEIF v_Count > 1 THEN
+        RETURN -1.00;
+    END IF;
+    SELECT Price INTO v_Price
+    FROM Jeza_Books
+    WHERE BookID = p_BookID
+    LIMIT 1;
+    RETURN v_Price * (1 - DiscountPercent / 100);
+END //
+DELIMITER ;
+
+DELIMITER //
+CREATE PROCEDURE Jeza_CheckLowStock()
+BEGIN
+    DECLARE done INT DEFAULT FALSE;
+    DECLARE v_BookID INT;
+    DECLARE v_Stock INT;
+    DECLARE cur CURSOR FOR 
+        SELECT BookID, StockQuantity 
+        FROM Jeza_Inventory 
+        WHERE StockQuantity < 25;
+    DECLARE CONTINUE HANDLER FOR NOT FOUND SET done = TRUE;
+    OPEN cur;
+    read_loop: LOOP
+        FETCH cur INTO v_BookID, v_Stock;
+        IF done THEN
+            LEAVE read_loop;
+        END IF;
+        INSERT INTO Jeza_StockAlerts (BookID, StockQuantity, AlertDate)
+        VALUES (v_BookID, v_Stock, CURDATE());
+    END LOOP;
+    CLOSE cur;
+END //
+DELIMITER ;
+
+SET GLOBAL event_scheduler = ON;
+CREATE EVENT Jeza_WeeklyInventoryCheck
+ON SCHEDULE EVERY 1 WEEK
+STARTS '2025-04-20 00:00:00'
+DO
+    CALL Jeza_CheckLowStock();
+
+SELECT BookID, Title, Jeza_GetDiscountedPrice(BookID, 10) AS DiscountedPrice
+FROM Jeza_Books;
+
+INSERT INTO Jeza_Inventory (BookID, StockQuantity, LastRestockDate, Supplier, CostPrice)
+VALUES (1, 20, '2025-04-15', 'BookSupplier Inc', 20.00);
+CALL Jeza_CheckLowStock();
+SELECT * FROM Jeza_StockAlerts;
+
+SHOW EVENTS FROM Jeza_230878369;

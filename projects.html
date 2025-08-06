@@ -102,6 +102,7 @@
                             </div>
                         </div>
                     </div>
+                    <!-- Pacman Game Card (fixed path) -->
                     <div class="project-card">
                         <div class="project-image">
                             <i class="fas fa-gamepad"></i>
@@ -117,43 +118,45 @@
                             </div>
                             <div class="project-links">
                                 <a href="#" class="project-link" id="playPacmanBtn"><i class="fas fa-play"></i> Play Game</a>
-                                <a href="230878369 Pacman game/Game Report.pdf" class="project-link" target="_blank"><i class="fas fa-file-pdf"></i> Game Report</a>
+                                <a href="230878369 Pacman Game/Game Report.pdf" class="project-link" target="_blank"><i class="fas fa-file-pdf"></i> Game Report</a>
                             </div>
                         </div>
                     </div>
+                    <!-- Mnqobi Jeza Research Report (OS Evaluation) -->
                     <div class="project-card">
                         <div class="project-image">
-                            <i class="fas fa-university"></i>
+                            <i class="fas fa-book"></i>
                         </div>
                         <div class="project-content">
-                            <h3>Bank Management System (Java, OOP, DB)</h3>
-                            <p class="project-description">A bank management system project using Java, object-oriented programming, and database design. Includes detailed documentation.</p>
+                            <h3>Evaluation of Operating System</h3>
+                            <p class="project-description">Research report on the evaluation of operating systems. Academic research by Mnqobi Jeza.</p>
                             <div class="project-tech">
-                                <span class="tech-tag">Java</span>
-                                <span class="tech-tag">OOP</span>
-                                <span class="tech-tag">Database Design</span>
-                                <span class="tech-tag">Documentation</span>
-                            </div>
-                            <div class="project-links">
-                                <a href="Theory Part ML Jeza.pdf" class="project-link" target="_blank"><i class="fas fa-file-pdf"></i> Documentation</a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="project-card">
-                        <div class="project-image">
-                            <i class="fas fa-robot"></i>
-                        </div>
-                        <div class="project-content">
-                            <h3>ML and AI Research Report</h3>
-                            <p class="project-description">Research documentation on Machine Learning and Artificial Intelligence, exploring theory and practical applications.</p>
-                            <div class="project-tech">
-                                <span class="tech-tag">Machine Learning</span>
-                                <span class="tech-tag">AI</span>
                                 <span class="tech-tag">Research</span>
+                                <span class="tech-tag">Operating Systems</span>
                                 <span class="tech-tag">Documentation</span>
                             </div>
                             <div class="project-links">
-                                <a href="ML and AI Report.pdf" class="project-link" target="_blank"><i class="fas fa-file-pdf"></i> Research Report</a>
+                                <a href="Mnqobi Jeza Research Report.pdf" class="project-link" target="_blank"><i class="fas fa-file-pdf"></i> Research Report</a>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Database Advanced Queries Documentation -->
+                    <div class="project-card">
+                        <div class="project-image">
+                            <i class="fas fa-database"></i>
+                        </div>
+                        <div class="project-content">
+                            <h3>Database Advanced Queries</h3>
+                            <p class="project-description">Documentation for advanced SQL queries and database design. Includes a downloadable SQL code file.</p>
+                            <div class="project-tech">
+                                <span class="tech-tag">SQL</span>
+                                <span class="tech-tag">Database</span>
+                                <span class="tech-tag">Documentation</span>
+                            </div>
+                            <div class="project-links">
+                                <a href="Jeza_230878369_GA9_Assigment_report.pdf" class="project-link" target="_blank"><i class="fas fa-file-pdf"></i> Documentation</a>
+                                <a href="#" class="project-link" id="viewSQLBtn"><i class="fas fa-code"></i> View SQL Code</a>
+                                <a href="Jeza_230878369_GA9_Assignment_SQL.txt" class="project-link" download><i class="fas fa-download"></i> Download SQL</a>
                             </div>
                         </div>
                     </div>
@@ -254,11 +257,18 @@
         </section>
     </main>
 
-    <!-- Pacman Game Modal -->
+    <!-- Pacman Game Modal (fixed path) -->
     <div id="pacmanModal" class="modal" style="display:none;">
       <div class="modal-content">
         <span class="close" id="closePacmanModal">&times;</span>
-        <iframe id="pacmanIframe" src="230878369 Pacman game/Game V5/index.html" width="900" height="700" style="border:none;"></iframe>
+        <iframe id="pacmanIframe" src="230878369 Pacman Game/Game V5/index.html" width="900" height="700" style="border:none;"></iframe>
+      </div>
+    </div>
+    <!-- SQL Code Modal -->
+    <div id="sqlModal" class="modal" style="display:none;">
+      <div class="modal-content" style="max-width:800px;">
+        <span class="close" id="closeSQLModal">&times;</span>
+        <pre id="sqlCodeBlock" style="background:#222;color:#fff;padding:1em;overflow:auto;max-height:600px;border-radius:8px;"></pre>
       </div>
     </div>
 
@@ -300,6 +310,32 @@
         if (event.target === modal) {
           modal.style.display = 'none';
           document.getElementById('pacmanIframe').src = document.getElementById('pacmanIframe').src;
+        }
+      });
+    }
+    // SQL code modal logic
+    const viewSQLBtn = document.getElementById('viewSQLBtn');
+    const sqlModal = document.getElementById('sqlModal');
+    const closeSQLModal = document.getElementById('closeSQLModal');
+    const sqlCodeBlock = document.getElementById('sqlCodeBlock');
+    if (viewSQLBtn && sqlModal && closeSQLModal && sqlCodeBlock) {
+      viewSQLBtn.addEventListener('click', function(e) {
+        e.preventDefault();
+        fetch('Jeza_230878369_GA9_Assignment_SQL.txt')
+          .then(response => response.text())
+          .then(text => {
+            sqlCodeBlock.textContent = text;
+            sqlModal.style.display = 'block';
+          });
+      });
+      closeSQLModal.addEventListener('click', function() {
+        sqlModal.style.display = 'none';
+        sqlCodeBlock.textContent = '';
+      });
+      window.addEventListener('click', function(event) {
+        if (event.target === sqlModal) {
+          sqlModal.style.display = 'none';
+          sqlCodeBlock.textContent = '';
         }
       });
     }
