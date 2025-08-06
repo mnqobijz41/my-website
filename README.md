@@ -32,6 +32,10 @@ My portfolio includes:
 - Font Awesome Icons
 - Responsive Design
 
+## Analytics Backend
+
+A Python backend is used to track website viewers and send a monthly email to mnqobijz41@gmail.com if there were any viewers that month. The backend will also send a confirmation email when analytics is first set up. See the backend/ directory for code and setup instructions.
+
 ---
 
 © 2024 MNQOBI LISBON JEZA. All rights reserved. 
