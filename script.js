@@ -217,3 +217,40 @@ function debugThemeState() {
 
 // Run debug on page load
 debugThemeState();
+
+// Analytics Tracking
+function trackPageView(pageName) {
+    // Only track if we're running on the analytics server
+    if (window.location.hostname === 'localhost' && window.location.port === '5000') {
+        fetch('/api/track', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                page: pageName
+            })
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.status === 'success') {
+                console.log('📊 Page view tracked:', pageName);
+            }
+        })
+        .catch(error => {
+            console.log('📊 Analytics not available (normal for local development)');
+        });
+    }
+}
+
+// Track page views on page load
+document.addEventListener('DOMContentLoaded', function() {
+    const currentPage = window.location.pathname.split('/').pop() || 'index.html';
+    trackPageView(currentPage);
+});
+
+// Track page views on navigation (for SPA-like behavior)
+window.addEventListener('popstate', function() {
+    const currentPage = window.location.pathname.split('/').pop() || 'index.html';
+    trackPageView(currentPage);
+});

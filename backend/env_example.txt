@@ -1,0 +1,12 @@
+# Email Configuration for Analytics Backend
+# Copy this file to .env and fill in your actual values
+
+# Gmail App Password (not your regular password)
+# To get this: Google Account → Security → 2-Step Verification → App passwords
+EMAIL_PASSWORD=your_gmail_app_password_here
+
+# Optional: Override default settings
+# SMTP_SERVER=smtp.gmail.com
+# SMTP_PORT=587
+# SENDER_EMAIL=mnqobijz41@gmail.com
+# RECIPIENT_EMAIL=mnqobijz41@gmail.com 
