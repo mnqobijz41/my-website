@@ -102,6 +102,61 @@
                             </div>
                         </div>
                     </div>
+                    <div class="project-card">
+                        <div class="project-image">
+                            <i class="fas fa-gamepad"></i>
+                        </div>
+                        <div class="project-content">
+                            <h3>Pacman Game (WebGL)</h3>
+                            <p class="project-description">A classic Pacman game implemented using JavaScript and WebGL. Playable directly in the browser. Academic project.</p>
+                            <div class="project-tech">
+                                <span class="tech-tag">JavaScript</span>
+                                <span class="tech-tag">WebGL</span>
+                                <span class="tech-tag">HTML5</span>
+                                <span class="tech-tag">Game Development</span>
+                            </div>
+                            <div class="project-links">
+                                <a href="#" class="project-link" id="playPacmanBtn"><i class="fas fa-play"></i> Play Game</a>
+                                <a href="230878369 Pacman game/Game Report.pdf" class="project-link" target="_blank"><i class="fas fa-file-pdf"></i> Game Report</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="project-card">
+                        <div class="project-image">
+                            <i class="fas fa-university"></i>
+                        </div>
+                        <div class="project-content">
+                            <h3>Bank Management System (Java, OOP, DB)</h3>
+                            <p class="project-description">A bank management system project using Java, object-oriented programming, and database design. Includes detailed documentation.</p>
+                            <div class="project-tech">
+                                <span class="tech-tag">Java</span>
+                                <span class="tech-tag">OOP</span>
+                                <span class="tech-tag">Database Design</span>
+                                <span class="tech-tag">Documentation</span>
+                            </div>
+                            <div class="project-links">
+                                <a href="Theory Part ML Jeza.pdf" class="project-link" target="_blank"><i class="fas fa-file-pdf"></i> Documentation</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="project-card">
+                        <div class="project-image">
+                            <i class="fas fa-robot"></i>
+                        </div>
+                        <div class="project-content">
+                            <h3>ML and AI Research Report</h3>
+                            <p class="project-description">Research documentation on Machine Learning and Artificial Intelligence, exploring theory and practical applications.</p>
+                            <div class="project-tech">
+                                <span class="tech-tag">Machine Learning</span>
+                                <span class="tech-tag">AI</span>
+                                <span class="tech-tag">Research</span>
+                                <span class="tech-tag">Documentation</span>
+                            </div>
+                            <div class="project-links">
+                                <a href="ML and AI Report.pdf" class="project-link" target="_blank"><i class="fas fa-file-pdf"></i> Research Report</a>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
 
@@ -199,6 +254,14 @@
         </section>
     </main>
 
+    <!-- Pacman Game Modal -->
+    <div id="pacmanModal" class="modal" style="display:none;">
+      <div class="modal-content">
+        <span class="close" id="closePacmanModal">&times;</span>
+        <iframe id="pacmanIframe" src="230878369 Pacman game/Game V5/index.html" width="900" height="700" style="border:none;"></iframe>
+      </div>
+    </div>
+
     <footer class="footer">
         <div class="container">
             <div class="footer-content">
@@ -219,5 +282,27 @@
     </footer>
 
     <script src="script.js"></script>
+    <script>
+    // Pacman modal logic
+    const playBtn = document.getElementById('playPacmanBtn');
+    const modal = document.getElementById('pacmanModal');
+    const closeModal = document.getElementById('closePacmanModal');
+    if (playBtn && modal && closeModal) {
+      playBtn.addEventListener('click', function(e) {
+        e.preventDefault();
+        modal.style.display = 'block';
+      });
+      closeModal.addEventListener('click', function() {
+        modal.style.display = 'none';
+        document.getElementById('pacmanIframe').src = document.getElementById('pacmanIframe').src; // reset game
+      });
+      window.addEventListener('click', function(event) {
+        if (event.target === modal) {
+          modal.style.display = 'none';
+          document.getElementById('pacmanIframe').src = document.getElementById('pacmanIframe').src;
+        }
+      });
+    }
+    </script>
 </body>
 </html> 
