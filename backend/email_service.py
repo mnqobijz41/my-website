@@ -29,8 +29,7 @@ class EmailService:
                 msg.attach(html_part)
             
             # Send email
-            server = smtplib.SMTP(self.smtp_server, self.smtp_port)
-            server.starttls()
+            server = smtplib.SMTP_SSL(self.smtp_server, 465)
             server.login(self.sender_email, self.sender_password)
             server.send_message(msg)
             server.quit()
