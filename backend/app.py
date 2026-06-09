@@ -44,17 +44,21 @@ def get_monthly_stats(year, month):
 
 @app.route('/api/test-email', methods=['POST'])
 def test_email():
-    """Manually trigger a test monthly report email — useful for verifying email works"""
+    """Manually trigger a test monthly report email"""
     try:
+        import threading
         now = datetime.datetime.now()
         year = now.year
         month = now.month
         stats = db.calculate_monthly_stats(year, month)
-        success = scheduler.email_service.send_monthly_report(year, month, stats)
-        if success:
-            return jsonify({'status': 'success', 'message': f'Test report sent for {year}-{month:02d}'})
-        else:
-            return jsonify({'status': 'error', 'message': 'Failed to send test email'}), 500
+        
+        def send_in_background():
+            scheduler.email_service.send_monthly_report(year, month, stats)
+        
+        thread = threading.Thread(target=send_in_background, daemon=True)
+        thread.start()
+        
+        return jsonify({'status': 'success', 'message': f'Email sending in background for {year}-{month:02d}'})
     except Exception as e:
         return jsonify({'status': 'error', 'message': str(e)}), 500
 
