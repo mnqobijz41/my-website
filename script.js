@@ -2,6 +2,7 @@
 const hamburger = document.querySelector('.hamburger');
 const navMenu = document.querySelector('.nav-menu');
 
+
 if (hamburger && navMenu) {
     hamburger.addEventListener('click', () => {
         hamburger.classList.toggle('active');
@@ -254,3 +255,19 @@ window.addEventListener('popstate', function() {
     const currentPage = window.location.pathname.split('/').pop() || 'index.html';
     trackPageView(currentPage);
 });
+
+const ANALYTICS_URL = 'https://my-website-lfc9.onrender.com';
+
+function trackPageView() {
+    const page = window.location.pathname.split('/').pop() || 'index.html';
+    fetch(`${ANALYTICS_URL}/api/track`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ page: page })
+    }).catch(() => {
+        // Silently fail — tracking should never break the site
+    });
+}
+ 
+// Track on page load
+document.addEventListener('DOMContentLoaded', trackPageView);
