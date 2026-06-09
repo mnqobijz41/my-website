@@ -53,7 +53,17 @@ def test_email():
         stats = db.calculate_monthly_stats(year, month)
         
         def send_in_background():
-            scheduler.email_service.send_monthly_report(year, month, stats)
+            try:
+                print(f"📧 Attempting to send email to {Config.RECIPIENT_EMAIL}")
+                print(f"📧 Using sender: {Config.SENDER_EMAIL}")
+                print(f"📧 Password set: {'Yes' if Config.SENDER_PASSWORD else 'NO - EMPTY!'}")
+                success = scheduler.email_service.send_monthly_report(year, month, stats)
+                if success:
+                    print("✅ Email sent successfully!")
+                else:
+                    print("❌ Email send returned False")
+            except Exception as e:
+                print(f"❌ Background email error: {e}")
         
         thread = threading.Thread(target=send_in_background, daemon=True)
         thread.start()
