@@ -7,7 +7,7 @@ from scheduler import AnalyticsScheduler
 from config import Config
 
 app = Flask(__name__)
-CORS(app, origins=["https://mnqobijz41.github.io"])
+CORS(app)
 
 # Initialize components
 db = AnalyticsDB()
